@@ -76,11 +76,43 @@ def init_bb_imgs() -> tuple[list[pg.Surface], list[int]]:
         bb_imgs.append(bb_img)
     return bb_imgs, accs
 
+
+def get_kk_img(sum_mv: tuple[int, int]) -> pg.Surface:
+    pass
+    """
+    移動量の合計値タプルに対応する向きの画像Surfaceを返す
+    引数：sum_mv
+    戻り値：対応する向きの画像Surface
+    """
+    # img = pg.image.load("fig/3.png") 
+    # dct = {
+    #     (0, -5):
+    #     (5, -5):
+    #     (5, 0): pg.tranform.flip(img, True, False),
+    #     (5, 5):
+    #     (0, 5):
+    #     (-5, 5): 
+    #     (-5, 0): img,
+    #     (-5, -5):
+    # }
+    
+    # img = pg.transform.rotozoom(img, 10, 1.0) 
+
+
+def calc_orientation(org: pg.Rect, dst: pg.Rect, current_xy: tuple[float, float]) -> tuple[float, float]:
+    """
+    orgから見て，dstがどこにあるかを計算し，方向ベクトルをタプルで返す
+    引数：org
+    戻り値：方向ベクトルをタプル
+    """
+    pass
+
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
     bg_img = pg.image.load("fig/pg_bg.jpg")    
     kk_img = pg.transform.rotozoom(pg.image.load("fig/3.png"), 0, 0.9)
+    #kk_img = get_kk_img((0, 0))
     kk_rct = kk_img.get_rect()
     kk_rct.center = 300, 200
     bb_img = pg.Surface((20, 20))  # 爆弾用の空Surface
@@ -109,16 +141,16 @@ def main():
             if key_lst[key]:
                 sum_mv[0] += tpl[0]
                 sum_mv[1] += tpl[1]
-
+        #kk_img = get_kk_img(tuple(sum_mv))
         kk_rct.move_ip(sum_mv)
         if check_bound(kk_rct) != (True, True):
         # こうかとんが画面外なら、元の位置に戻す
             kk_rct.move_ip(-sum_mv[0], -sum_mv[1])
         screen.blit(kk_img, kk_rct)
         bb_imgs, bb_accs = init_bb_imgs()
-        avx = vx * bb_accs[min(tmr // 50, 9)]
-        avy = vy * bb_accs[min(tmr // 50, 9)]
-        bb_img = bb_imgs[min(tmr // 50, 9)]
+        avx = vx * bb_accs[min(tmr // 500, 9)]
+        avy = vy * bb_accs[min(tmr // 500, 9)]
+        bb_img = bb_imgs[min(tmr // 500, 9)]
         bb_rct.width = bb_img.get_rect().width
         bb_rct.height = bb_img.get_rect().height
         bb_rct.move_ip(avx, avy)  # 爆弾動く
