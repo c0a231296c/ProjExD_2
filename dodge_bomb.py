@@ -40,14 +40,12 @@ def gameover(screen: pg.Surface) -> None:
     pg.draw.rect(go_rect, (0, 0, 0), (0, 0, WIDTH, HEIGHT))
     go_rect.set_alpha(200)
     screen.blit(go_rect, [0, 0])
-
     #文字の処理
     fonto = pg.font.Font(None, 60)
     txt = fonto.render("Game Over", True, (255, 255, 255))
     txt_locate = txt.get_rect()
     txt_locate.center = WIDTH / 2, HEIGHT / 2
     screen.blit(txt, txt_locate)
-
     #コウカトン画像の処理
     kk_cry_img = pg.image.load("fig/8.png")   
     kk_cry_rct = kk_cry_img.get_rect()
@@ -55,7 +53,6 @@ def gameover(screen: pg.Surface) -> None:
     screen.blit(kk_cry_img, kk_cry_rct)
     kk_cry_rct.center = WIDTH / 2 - 200, HEIGHT / 2
     screen.blit(kk_cry_img, kk_cry_rct)
-
     pg.display.update()
     time.sleep(5)
     return 
@@ -106,6 +103,7 @@ def calc_orientation(org: pg.Rect, dst: pg.Rect, current_xy: tuple[float, float]
     戻り値：方向ベクトルをタプル
     """
     pass
+
 
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
